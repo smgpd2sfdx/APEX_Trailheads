@@ -1,0 +1,59 @@
+https://trailhead.salesforce.com/en/apex_testing/apex_testing_data
+
+ 
+
+Create Data Factory class
+
+ 
+
+/*********
+
+*Description : Data factory class to retrun the list of contacts for insertion.
+
+*
+
+*
+
+*************/
+
+public class RandomContactFactory
+
+{
+
+    public static  List<Contact> generateRandomContacts(integer x,string sLastName)
+
+    {
+
+        list<contact>objconList=new list<contact>();
+
+        for(integer i=0;i<x;i++)
+
+        {
+
+           Contact c = new Contact(LastName= sLastName, FirstName = 'Test ' +i);
+
+            objconList.add(c);
+
+        }
+
+        return objconList;
+
+    }
+
+}
+
+ 
+
+Test Class
+
+ 
+
+@isTest
+public class RandomContactFactoryTest 
+{
+    testmethod static void testfunction()
+    {
+        list<contact>lstcontact=RandomContactFactory.generateRandomContacts(2,'test');
+        
+    }
+}
