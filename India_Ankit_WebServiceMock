@@ -1,0 +1,48 @@
+public class ParkLocator {
+    public  static string[] country(String country) {
+        ParkService.ParksImplPort prk = new ParkService.ParksImplPort();
+        return prk.byCountry(country);
+    }
+}
+
+****************************
+
+@isTest
+private class ParkLocatorTest {
+    @isTest static void testCallout() {              
+        // This causes a fake response to be generated
+        Test.setMock(WebServiceMock.class, new ParkServiceMock());
+        // Call the method that invokes a callout
+  
+        
+        String country = 'India';
+    
+        
+        
+        
+        System.assertEquals(new List<String>{'Lal Bhag', 'Cubbon Park', 'Pazhassi Dam'},     ParkLocator.country(country)); 
+    }
+}
+
+
+******************
+
+@isTest
+global class ParkServiceMock implements WebServiceMock {
+   global void doInvoke(
+           Object stub,
+           Object request,
+           Map<String, Object> response,
+           String endpoint,
+           String soapAction,
+           String requestName,
+           String responseNS,
+           String responseName,
+           String responseType) {
+        // start - specify the response you want to send
+        parkService.byCountryResponse response_x = new parkService.byCountryResponse();
+        response_x.return_x = new List<String>{'Lal Bhag', 'Cubbon Park', 'Pazhassi Dam'};
+               // end
+        response.put('response_x', response_x); 
+   }
+}
