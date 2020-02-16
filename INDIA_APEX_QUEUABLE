@@ -1,0 +1,107 @@
+https://trailhead.salesforce.com/asynchronous_apex/async_apex_queueable
+
+a.    Create Batch class
+
+public class AddPrimaryContact implements Queueable {
+
+   
+
+    private contact contact;
+
+    private string State;
+
+   
+
+    public AddPrimaryContact(contact con , string State ) {
+
+       
+
+        contact =  con;
+
+        State = State;
+
+    }
+
+ 
+
+    public void execute(QueueableContext context) {
+
+        list<account> lstAct = new list<account>();
+
+        lstAct= [select id,billingstreet from account where billingstreet=:State limit 200];
+
+        list<contact> lstContact=new list<contact>();
+
+        for (account varAct:lstAct)
+
+        {
+
+        contact ct = contact.clone();
+
+        ct.accountid = varAct.id;
+
+        lstContact.add(ct);
+
+        }
+
+        Database.insert(lstContact);
+
+    }
+
+   
+
+}
+
+b.    Create test class
+
+@isTest
+
+public class AddPrimaryContactTest {
+
+    testMethod static  void testBatch() {
+
+       
+
+        list<account> lstAccount= new list<account>();
+
+        for(integer i=0; i< 100;i ++)
+
+        {   account act= new account(); 
+
+        act.name='test'+1;
+
+            if(i<50)
+
+            {
+
+                act.billingState ='NY';
+
+            }else
+
+            {
+
+                 act.billingState ='CA';
+
+            }
+
+          
+
+            lstAccount.add(act);
+
+        }
+
+        database.insert(lstAccount);
+
+        Test.StartTest();
+
+        contact ct = new contact(firstname='test',lastname='lstname',email='test@gmail.com');
+
+         System.enqueueJob(new AddPrimaryContact(ct, 'NY'));
+
+        Test.StopTest();
+
+    }
+
+ 
+
+}
