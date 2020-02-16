@@ -1,0 +1,77 @@
+ https://trailhead.salesforce.com/en/apex_testing/apex_testing_triggers
+
+Copy and paste trigger code from following link
+
+https://github.com/developerforce/trailhead-code-samples/blob/master/RestrictContactByName.cls
+
+
+trigger RestrictContactByName on Contact (before insert, before update) {
+	
+	//check contacts prior to insert or update for invalid data
+	For (Contact c : Trigger.New) {
+		if(c.LastName == 'INVALIDNAME') {	//invalidname is invalid
+			c.AddError('The Last Name "'+c.LastName+'" is not allowed for DML');
+		}
+
+	}
+
+
+
+}
+
+
+
+
+ 
+
+
+
+
+
+
+
+
+Copy and paste following and run test class
+
+
+@isTest
+
+/****
+
+ * Description : This class is used to cover test coverage of trigger. In trigger there is a condition to check last name.
+
+ *                IF lastname is "INVALIDNAME" then throw an exception.
+
+ *
+
+
+ * ***/
+
+Public class TestRestrictContactByName
+
+{
+
+    testmethod static void test1()
+
+    {
+        // Trigger will throw an exception. Try and catch is used in this test class.
+
+        try
+
+        {
+           
+            contact objcontact=new contact(firstname='test',lastname='INVALIDNAME');
+
+            insert objcontact;
+
+        }
+
+        catch(Exception e)
+
+        {
+
+        }
+
+    }
+
+}
