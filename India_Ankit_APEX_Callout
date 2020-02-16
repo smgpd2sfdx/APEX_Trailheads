@@ -1,3 +1,5 @@
+Trailhead: https://trailhead.salesforce.com/en/content/learn/modules/apex_integration_services/apex_integration_rest_callouts
+
 global class AnimalLocator
 {
     public static String getAnimalNameById(Integer x){
