@@ -1,0 +1,38 @@
+/*
+* Name: Steven M. Giangrasso
+* Lightning Trailhead: https://trailhead.salesforce.com/modules/apex_patterns_dsl/units/apex_patterns_dsl_apply_selector_l_principles
+*
+* Description: This unit introduces the Selector, a layer of code that encapsulates logic responsible for 
+* querying information from your custom objects and feeding it into your Domain layer and Service layer code. 
+* You can also reuse Selector classes from other areas that require querying, such as Batch Apex and controllers.
+*/
+
+public class AccountsSelector extends fflib_SObjectSelector {
+
+    public List<Schema.SObjectField> getSObjectFieldList() {
+        return new List<Schema.SObjectField> {
+                                    Account.ID,
+                                    Account.Description,
+                                    Account.Name,
+                                    Account.AnnualRevenue };
+    }
+
+    public Schema.SObjectType getSObjectType() {
+        return Account.sObjectType;
+    }
+
+
+    /*
+    *
+    * The following is a simple example used to initialize a Domain class instance with records. 
+    * This Selector uses non-static methods to provide its functionality, so an instance is created. 
+    * If the caller retains the selector instance, there’s scope to perform some configuration 
+    * and caching if needed.
+    *
+    *
+    */
+    
+    public List<Account> selectById(Set<ID> idSet) {
+        return (List<Account>) selectSObjectsById(idSet);
+    }
+}
