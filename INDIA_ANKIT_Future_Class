@@ -1,0 +1,77 @@
+a.    reate Number_of_Contacts field in account object
+
+b.    Create class
+
+public class AccountProcessor
+
+{
+
+    @future
+
+    public static void countContacts(list<id>AccIds)
+
+    {
+
+        list<account>lstAcc=[select id,Number_of_Contacts__c,(select id from Contacts) from account where id IN: AccIds];
+
+        for(account objaccount : lstAcc)
+
+        {
+
+            objaccount.Number_of_Contacts__c=objaccount.Contacts.size();
+
+           
+
+        }
+
+        update lstAcc;
+
+    }
+
+}
+
+ 
+
+c.     Create test class
+
+@isTest
+
+public class AccountProcessorTest {
+
+ 
+
+testmethod static void test1()
+
+{
+
+    account acc1=new account(name='test account');
+
+    insert acc1;
+
+   
+
+    contact objcon= new contact(firstname='test fristname',lastname='test',accountid=acc1.id);
+
+    insert objcon;
+
+   
+
+    Test.startTest();
+
+    AccountProcessor.countContacts(new list<id>{acc1.id});
+
+    Test.stopTest();
+
+}
+
+ 
+
+ 
+
+}
+
+ 
+
+ 
+
+ 
