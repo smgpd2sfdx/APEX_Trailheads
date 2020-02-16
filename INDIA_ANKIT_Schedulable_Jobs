@@ -1,0 +1,95 @@
+https://trailhead.salesforce.com/asynchronous_apex/async_apex_scheduled
+
+ 
+
+a.    Create Schedule class
+
+public class DailyLeadProcessor implements Schedulable {
+
+ 
+
+ 
+
+public void execute(SchedulableContext ctx) {
+
+      
+
+       list<lead>lstLead=[select id,LeadSource  from lead where LeadSource ='' or LeadSource =null limit 200];
+
+       for(lead objlead : lstLead)
+
+       {
+
+           objlead.LeadSource='Dreamforce';
+
+       }
+
+       update lstLead;
+
+      
+
+    }
+
+}
+
+ 
+
+b.    Create Test class
+
+@isTest
+
+public class DailyLeadProcessorTest
+
+{
+
+   
+
+    testmethod static void test1()
+
+    {
+
+         List <lead> leadList = new List<lead>();
+
+      for(integer i = 0; i<200; i++)
+
+      {
+
+         Lead objLead = new Lead(
+
+                     firstName='testAccount'+i,
+
+                     lastName = 'testAccount'+i,
+
+                  
+
+                     Company='test company'+i
+
+                     );
+
+         leadList.add(objLead);
+
+      }
+
+      insert leadList;
+
+       Test.StartTest();
+
+      String sch = '0 0 23 * * ?';
+
+       String jobId = System.schedule('ScheduledApexTest',sch,new DailyLeadProcessor());
+
+     
+
+       Test.stopTest();
+
+   
+
+    }
+
+   
+
+}
+
+ 
+
+ 
