@@ -1,0 +1,13 @@
+. https://trailhead.salesforce.com/asynchronous_apex/async_apex_introduction
+
+ 
+
+a.       What is a key benefits of asynchronous processing?
+
+Answer: Higher governor and execution limits
+
+b.    Make a callout to a web service when a user updates a record.
+
+Answer: Update all records in your org.
+
+2.       https://trailhead.salesforce.com/asynchronous_apex/async_apex_future_methods
