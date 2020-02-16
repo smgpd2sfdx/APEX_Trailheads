@@ -1,0 +1,48 @@
+    https://trailhead.salesforce.com/en/apex_testing/apex_testing_intro
+
+ 
+
+Copy and apex class code from following link
+
+https://github.com/developerforce/trailhead-code-samples/blob/master/VerifyDate.cls
+
+ 
+
+Copy and paste following and run test class
+
+ 
+
+@isTest
+
+public class TestVerifyDate
+
+{
+
+    testmethod static void test1()
+
+    {
+
+        // Assigning current date
+
+        date d1=system.today();
+
+        // Assigning date 29th of current month
+
+        date d2=system.today().addDays(-29);
+
+        // Calling Apex class method to cover test coverage if condition
+
+        date result1=VerifyDate.CheckDates(d1,d2);
+
+        // Calling Apex classs method to cover test coverage of else condition
+
+        date result2=VerifyDate.CheckDates(d2,d1);
+
+    }
+
+ 
+
+}
+
+ ******************************************************************************
+
